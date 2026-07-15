@@ -21,22 +21,83 @@ Our smart chemistry engine distinguishes plain words from elements and handles c
 | `H2O(l)` | `\text{H}_2\text{O}\text{(l)}` | **H₂O(l)** | State of matter detection |
 | `H2 + O2 --> H2O` | `\text{H}_2 \text{ + } \text{O}_2 \longrightarrow \text{H}_2\text{O}` | **H₂ + O₂ ⟶ H₂O** | Full chemical reaction mapping |
 
-### 2. Math & Logic Shorthand
+---
+
+### 2. Math, Fractions & Powers
 
 | Raw Shorthand | What Mathify Outputs (LaTeX) | Visual Result | Shorthand Meaning |
 | :--- | :--- | :--- | :--- |
 | `1/2` | `\frac{1}{2}` | **½** | Basic Fractions |
+| `1/2/3` | `\frac{\frac{1}{2}}{3}` | **¹/₂ / 3** | Nested Fractions |
 | `dy/dx` | `\frac{dy}{dx}` | **dy/dx** | Calculus derivatives |
 | `sqrt(x)` | `\sqrt{x}` | **√x** | Roots |
 | `root(3, x)` | `\sqrt[3]{x}` | **³√x** | N-th Root |
 | `x^y` | `x^y` | **xʸ** | Powers / Superscripts |
 | `x_i` | `x_i` | **xᵢ** | Subscripts |
 
-### 3. Quick-type Operators & Greek Letters
+---
 
-* **Symbols:** `pi` → **π** | `theta` → **θ** | `lambda` → **λ** | `ohm` → **Ω** | `micro` → **μ** | `deg` → **°** | `inf` → **∞**
-* **Comparisons:** `!=` → **≠** | `<=` → **≤** | `>=` → **≥** | `approx` → **≈**
-* **Arrows:** `->` → **→** | `-->` → **⟶** | `<=>` → **⇌** | `=>` → **⇒**
+### 3. Greek Letters & Constants
+
+* **pi** → **π** (`\pi`)
+* **theta** → **θ** (`\theta`)
+* **lambda** → **λ** (`\lambda`)
+* **alpha** → **α** (`\alpha`)
+* **beta** → **β** (`\beta`)
+* **gamma** → **γ** (`\gamma`)
+* **sigma** / **Sigma** → **σ** / **Σ** (`\sigma` / `\Sigma`)
+* **phi** → **φ** (`\phi`)
+* **omega** → **ω** (`\omega`)
+* **delta** / **Delta** → **δ** / **Δ** (`\delta` / `\Delta`)
+* **ohm** / **Ohm** → **Ω** (`\Omega`)
+* **micro** → **μ** (`\mu`)
+* **deg** → **°** (`^\circ`)
+* **inf** / **infinity** → **∞** (`\infty`)
+
+---
+
+### 4. Logic, Sets & Functions
+
+* **therefore** → **∴** (`\therefore`)
+* **because** → **because** (`\because`)
+* **subset** → **⊂** (`\subset`)
+* **union** / **cup** → **∪** (`\cup`)
+* **intersect** / **cap** → **∩** (`\cap`)
+* **member** → **∈** (`\in`)
+* **notin** → **∉** (`\notin`)
+* **sin** / **cos** / **tan** → **sin** / **cos** / **tan** (`\sin` / `\cos` / `\tan`)
+* **log** / **ln** / **lim** → **log** / **ln** / **lim** (`\log` / `\ln` / `\lim`)
+
+---
+
+### 5. Operators & Comparisons
+
+| Raw Shorthand | What Mathify Outputs (LaTeX) | Visual Result | Shorthand Meaning |
+| :--- | :--- | :--- | :--- |
+| `5 x 5` | `5 \times 5` | **5 × 5** | Multiplication (Numbers only) |
+| `*` | `\times` | **×** | Standalone Multiply |
+| `div` | `\div` | **÷** | Division Sign |
+| `!=` | `\neq` | **≠** | Not equal to |
+| `<=` / `=<` | `\leq` | **≤** | Less than or equal to |
+| `>=` | `\geq` | **≥** | Greater than or equal to |
+| `approx` / `~~` | `\approx` | **≈** | Approximately equal |
+| `+-` | `\pm` | **±** | Plus-Minus |
+| `-+` | `\mp` | **∓** | Minus-Plus |
+| `propto` | `\propto` | **∝** | Proportional to |
+
+---
+
+### 6. Dynamic Arrows
+
+* `->` → **→** (`\rightarrow`)
+* `-->` → **⟶** (`\longrightarrow`)
+* `<-` → **←** (`\leftarrow`)
+* `<--` → **⟵** (`\longleftarrow`)
+* `<->` → **↔** (`\leftrightarrow`)
+* `<==>` / `<—>` → **⟷** (`\longleftrightarrow`)
+* `<=>` → **⇌** (`\rightleftharpoons`)
+* `=>` → **⇒** (`\Rightarrow`)
+* `==>` → **⟹** (`\Longrightarrow`)
 
 ---
 
