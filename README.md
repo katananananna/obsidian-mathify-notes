@@ -1,120 +1,102 @@
 # Mathify Notes 🧪✨
 
-Mathify Notes is an incredibly intuitive shorthand auto-converter for Obsidian. Simply type math shortcuts, chemical formulas, reactions, or mathematical structures in plain text, press space (or trigger the conversion command), and watch them convert into beautifully formatted LaTeX notation instantly.
+Mathify Notes is an incredibly intuitive shorthand auto-converter for Obsidian. Simply type common plain-text shortcuts, press **Space** (or use the conversion command), and watch them convert into beautifully formatted LaTeX math and chemistry equations instantly.
+
+No more breaking your note-taking flow to type out clunky, complex LaTeX code!
 
 ---
 
-## 🚀 Interactive Cheat Sheet & Showcase
+## 🚀 Quick Reference Guide
 
-### 1. Chemical Formulas & Reactions
-Our smart chemistry engine distinguishes plain words from elements and handles charges, subscripts, and state symbols automatically.
+### 🧪 Chemistry & Reactions
+The smart chemistry engine automatically detects elements, brackets, subscripts, states of matter, and ionic charges.
 
-| Raw Shorthand | What Mathify Outputs (LaTeX) | Visual Result | Notes / Structure |
-| :--- | :--- | :--- | :--- |
-| `H2O` | `\text{H}_2\text{O}` | **H₂O** | Simple subscript auto-pairing |
-| `SO42+` | `\text{SO}_{4}^{2+}` | **SO₄²⁺** | Polyatomic cation |
-| `Cr2O72-` | `\text{Cr}_2\text{O}_7^{2-}` | **Cr₂O₇²⁻** | Deep subscripts + anionic charges |
-| `Ca(OH)2` | `\text{Ca(OH)}_2` | **Ca(OH)₂** | Nested compound brackets |
-| `[Co(NH3)6]Cl3` | `\text{[Co(NH}_3\text{)}_6\text{]Cl}_3` | **[Co(NH₃)₆]Cl₃** | Complex coordination compound |
-| `CuSO4*5H2O` | `\text{CuSO}_4 \cdot 5\text{H}_2\text{O}` | **CuSO₄ · 5H₂O** | Hydration state using `*` spacing |
-| `Fe^3+` | `\text{Fe}^{3+}` | **Fe³⁺** | Explicit caret charge mapping |
-| `H2O(l)` | `\text{H}_2\text{O}\text{(l)}` | **H₂O(l)** | State of matter detection |
-| `H2 + O2 --> H2O` | `\text{H}_2 \text{ + } \text{O}_2 \longrightarrow \text{H}_2\text{O}` | **H₂ + O₂ ⟶ H₂O** | Full chemical reaction mapping |
+| What you type | What it transforms into | Description |
+| :--- | :--- | :--- |
+| `H2O` | **H₂O** | Subscripts |
+| `Ca(OH)2` | **Ca(OH)₂** | Polyatomic compounds |
+| `SO42-` | **SO₄²⁻** | Ionic charges & polyatomic ions |
+| `CuSO4*5H2O` | **CuSO₄ · 5H₂O** | Hydration state |
+| `H2O(l)` | **H₂O(l)** | States of matter |
+| `H2 + O2 --> H2O` | **H₂ + O₂ ⟶ H₂O** | Whole reactions with arrows |
 
 ---
 
-### 2. Math, Fractions & Powers
+### 📐 General Math & Fractions
 
-| Raw Shorthand | What Mathify Outputs (LaTeX) | Visual Result | Shorthand Meaning |
-| :--- | :--- | :--- | :--- |
-| `1/2` | `\frac{1}{2}` | **½** | Basic Fractions |
-| `1/2/3` | `\frac{\frac{1}{2}}{3}` | **¹/₂ / 3** | Nested Fractions |
-| `dy/dx` | `\frac{dy}{dx}` | **dy/dx** | Calculus derivatives |
-| `sqrt(x)` | `\sqrt{x}` | **√x** | Roots |
-| `root(3, x)` | `\sqrt[3]{x}` | **³√x** | N-th Root |
-| `x^y` | `x^y` | **xʸ** | Powers / Superscripts |
-| `x_i` | `x_i` | **xᵢ** | Subscripts |
-
----
-
-### 3. Greek Letters & Constants
-
-* **pi** → **π** (`\pi`)
-* **theta** → **θ** (`\theta`)
-* **lambda** → **λ** (`\lambda`)
-* **alpha** → **α** (`\alpha`)
-* **beta** → **β** (`\beta`)
-* **gamma** → **γ** (`\gamma`)
-* **sigma** / **Sigma** → **σ** / **Σ** (`\sigma` / `\Sigma`)
-* **phi** → **φ** (`\phi`)
-* **omega** → **ω** (`\omega`)
-* **delta** / **Delta** → **δ** / **Δ** (`\delta` / `\Delta`)
-* **ohm** / **Ohm** → **Ω** (`\Omega`)
-* **micro** → **μ** (`\mu`)
-* **deg** → **°** (`^\circ`)
-* **inf** / **infinity** → **∞** (`\infty`)
+| What you type | What it transforms into | Description |
+| :--- | :--- | :--- |
+| `1/2` | **½** | Fractions |
+| `1/2/3` | **¹/₂ / 3** | Nested fractions |
+| `dy/dx` | **dy/dx** | Calculus derivatives |
+| `x^y` | **xʸ** | Superscripts / Powers |
+| `x_i` | **xᵢ** | Subscripts |
+| `sqrt(x)` | **√x** | Square roots |
+| `root(3, x)` | **³√x** | N-th roots |
 
 ---
 
-### 4. Logic, Sets & Functions
+### 🔮 Operators, Symbols & Logic
 
-* **therefore** → **∴** (`\therefore`)
-* **because** → **because** (`\because`)
-* **subset** → **⊂** (`\subset`)
-* **union** / **cup** → **∪** (`\cup`)
-* **intersect** / **cap** → **∩** (`\cap`)
-* **member** → **∈** (`\in`)
-* **notin** → **∉** (`\notin`)
-* **sin** / **cos** / **tan** → **sin** / **cos** / **tan** (`\sin` / `\cos` / `\tan`)
-* **log** / **ln** / **lim** → **log** / **ln** / **lim** (`\log` / `\ln` / `\lim`)
-
----
-
-### 5. Operators & Comparisons
-
-| Raw Shorthand | What Mathify Outputs (LaTeX) | Visual Result | Shorthand Meaning |
-| :--- | :--- | :--- | :--- |
-| `5 x 5` | `5 \times 5` | **5 × 5** | Multiplication (Numbers only) |
-| `*` | `\times` | **×** | Standalone Multiply |
-| `div` | `\div` | **÷** | Division Sign |
-| `!=` | `\neq` | **≠** | Not equal to |
-| `<=` / `=<` | `\leq` | **≤** | Less than or equal to |
-| `>=` | `\geq` | **≥** | Greater than or equal to |
-| `approx` / `~~` | `\approx` | **≈** | Approximately equal |
-| `+-` | `\pm` | **±** | Plus-Minus |
-| `-+` | `\mp` | **∓** | Minus-Plus |
-| `propto` | `\propto` | **∝** | Proportional to |
+| What you type | What it transforms into | Description |
+| :--- | :--- | :--- |
+| `!=` | **≠** | Not equal to |
+| `<=` / `=<` | **≤** | Less than or equal to |
+| `>=` | **≥** | Greater than or equal to |
+| `approx` / `~~` | **≈** | Approximately |
+| `+-` / `-+` | **±** / **∓** | Plus-Minus / Minus-Plus |
+| `therefore` | **∴** | Logical "therefore" |
+| `because` | **∵** | Logical "because" |
+| `subset` | **⊂** | Subset |
+| `union` / `cup` | **∪** | Set union |
+| `intersect` / `cap` | **∩** | Set intersection |
+| `member` / `notin` | **∈** / **∉** | Set membership |
 
 ---
 
-### 6. Dynamic Arrows
+### 🧬 Greek Letters & Constants
 
-* `->` → **→** (`\rightarrow`)
-* `-->` → **⟶** (`\longrightarrow`)
-* `<-` → **←** (`\leftarrow`)
-* `<--` → **⟵** (`\longleftarrow`)
-* `<->` → **↔** (`\leftrightarrow`)
-* `<==>` / `<—>` → **⟷** (`\longleftrightarrow`)
-* `<=>` → **⇌** (`\rightleftharpoons`)
-* `=>` → **⇒** (`\Rightarrow`)
-* `==>` → **⟹** (`\Longrightarrow`)
+| What you type | What it transforms into | Description |
+| :--- | :--- | :--- |
+| `pi` | **π** | Pi constant |
+| `theta` | **θ** | Angle variables |
+| `ohm` | **Ω** | Ohms (Physics) |
+| `micro` | **μ** | Micro metric prefix |
+| `delta` / `Delta` | **δ** / **Δ** | Lowercase / Uppercase Delta |
+| `sigma` / `Sigma` | **σ** / **Σ** | Lowercase / Uppercase Sigma |
+| `alpha` / `beta` | **α** / **β** | Alpha & Beta |
+| `gamma` / `phi` | **γ** / **φ** | Gamma & Phi |
+| `omega` / `lambda` | **ω** / **λ** | Omega & Lambda |
+| `deg` | **°** | Degrees symbol |
+| `inf` / `infinity` | **∞** | Infinity |
+
+---
+
+### 🏹 Shortcuts for Arrows
+
+| What you type | What it transforms into | Description |
+| :--- | :--- | :--- |
+| `->` / `-->` | **→** / **⟶** | Right arrows |
+| `<-` / `<--` | **←** / **⟵** | Left arrows |
+| `<->` / `<—>` | **↔** / **⟷** | Double-sided arrows |
+| `<=>` | **⇌** | Chemical equilibrium arrow |
+| `=>` / `==>` | **⇒** / **⟹** | Logical implication arrows |
 
 ---
 
 ## 🛠️ Installation
 
-### Official Store (Once approved)
-1. Inside **Obsidian**, head to **Settings** > **Community plugins**.
-2. Turn off **Safe mode**.
-3. Click **Browse** and search for `Mathify Notes`.
-4. Click **Install**, then select **Enable**.
+### Official Store
+1. Open **Obsidian Settings** > **Community plugins**.
+2. Disable **Safe mode**.
+3. Click **Browse**, search for `Mathify Notes`, and click **Install** then **Enable**.
 
-### Quick Manual Install (Beta)
-1. Download `main.js`, `manifest.json`, and `styles.css` from our latest release.
-2. Move them into your Obsidian vault directory under `.obsidian/plugins/mathify-notes/`.
-3. Open Obsidian settings and enable the plugin.
+### Manual Beta Install
+1. Download `main.js`, `manifest.json`, and `styles.css` from our latest GitHub release.
+2. Save them into your vault's directory under `.obsidian/plugins/mathify-notes/`.
+3. Open **Obsidian Settings** and enable the plugin.
 
 ---
 
 ## 📜 License
-This project is licensed under the [MIT License](LICENSE) - open-source, fast, and free to modify.
+This project is open-source under the [MIT License](LICENSE).
