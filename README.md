@@ -1,6 +1,6 @@
 # Mathify Notes 🧪✨
 
-Mathify Notes is an incredibly intuitive shorthand auto-converter for Obsidian. Simply type math shortcuts, chemical formulas, reactions, or mathematical structures in plain text, press space (or trigger the conversion command), and watch them convert into beautifully formatted $\LaTeX$ notation instantly.
+Mathify Notes is an incredibly intuitive shorthand auto-converter for Obsidian. Simply type math shortcuts, chemical formulas, reactions, or mathematical structures in plain text, press space (or trigger the conversion command), and watch them convert into beautifully formatted LaTeX notation instantly.
 
 ---
 
@@ -9,7 +9,7 @@ Mathify Notes is an incredibly intuitive shorthand auto-converter for Obsidian. 
 ### 1. Chemical Formulas & Reactions
 Our smart chemistry engine distinguishes plain words from elements and handles charges, subscripts, and state symbols automatically.
 
-| Raw Shorthand | Rendered $\LaTeX$ Formula | Notes / Structure |
+| Raw Shorthand | Rendered LaTeX Formula | Notes / Structure |
 | :--- | :--- | :--- |
 | `H2O` | $\text{H}_2\text{O}$ | Simple subscript auto-pairing |
 | `SO42+` | $\text{SO}_{4}^{2+}$ | Polyatomic cation |
@@ -23,7 +23,7 @@ Our smart chemistry engine distinguishes plain words from elements and handles c
 
 ### 2. Math & Logic Shorthand
 
-| Raw Shorthand | Rendered $\LaTeX$ Math | Shorthand Shorthands |
+| Raw Shorthand | Rendered LaTeX Math | Shorthand Shorthands |
 | :--- | :--- | :--- |
 | `1/2` | $\frac{1}{2}$ | Basic Fractions |
 | `1/2/3` | $\frac{\frac{1}{2}}{3}$ | Nested Fractions |
