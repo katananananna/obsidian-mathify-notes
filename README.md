@@ -1,10 +1,10 @@
 # Mathify Notes 🧪✨
 
 Automatically converts raw text into LaTeX equations as you type without you ever needing to write LaTeX syntax 
-(e.g., `1/2` ⟶ `\frac{1}{2}` [½] or `H2O` ⟶ `\text{H}_2\text{O}` [H₂O]).
+(e.g., `1/2` ⟶  ½ or `H2O` ⟶ H₂O).
 ---
 
-## 🚀 Quick Reference Guide
+## 🚀 FULL CONVERTION GUIDE
 
 ### 🧪 Chemistry & Reactions
 The smart chemistry engine automatically detects elements, brackets, subscripts, states of matter, and ionic charges.
