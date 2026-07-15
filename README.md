@@ -1,9 +1,7 @@
 # Mathify Notes 🧪✨
 
-Mathify Notes is an incredibly intuitive shorthand auto-converter for Obsidian. Simply type common plain-text shortcuts, press **Space** (or use the conversion command), and watch them convert into beautifully formatted LaTeX math and chemistry equations instantly.
-
-No more breaking your note-taking flow to type out clunky, complex LaTeX code!
-
+Automatically converts raw text into LaTeX equations as you type without you ever needing to write LaTeX syntax 
+(e.g., `1/2` ⟶ `\frac{1}{2}` [½] or `H2O` ⟶ `\text{H}_2\text{O}` [H₂O]).
 ---
 
 ## 🚀 Quick Reference Guide
@@ -81,20 +79,6 @@ The smart chemistry engine automatically detects elements, brackets, subscripts,
 | `<->` / `<—>` | **↔** / **⟷** | Double-sided arrows |
 | `<=>` | **⇌** | Chemical equilibrium arrow |
 | `=>` / `==>` | **⇒** / **⟹** | Logical implication arrows |
-
----
-
-## 🛠️ Installation
-
-### Official Store
-1. Open **Obsidian Settings** > **Community plugins**.
-2. Disable **Safe mode**.
-3. Click **Browse**, search for `Mathify Notes`, and click **Install** then **Enable**.
-
-### Manual Beta Install
-1. Download `main.js`, `manifest.json`, and `styles.css` from our latest GitHub release.
-2. Save them into your vault's directory under `.obsidian/plugins/mathify-notes/`.
-3. Open **Obsidian Settings** and enable the plugin.
 
 ---
 
