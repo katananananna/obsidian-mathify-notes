@@ -1,0 +1,10 @@
+{
+  "id": "mathify-notes",
+  "name": "Mathify Notes",
+  "version": "1.4.2",
+  "minAppVersion": "0.15.0",
+  "description": "Intuitively formats chemical formulas (H2O, Ca(OH)2, ions), nested fractions, powers, variables, and math symbols as you type.",
+  "author": "katana",
+  "authorUrl": "https://github.com/katananananna",
+  "isDesktopOnly": false
+}
