@@ -55,18 +55,22 @@ Command palette: **Convert math shorthand in current line**.
 
 ## Install / update
 
-### Community plugins (if listed)
+Release **1.5.0** includes the three files Obsidian needs: `main.js`, `manifest.json`, `styles.css`.
 
-Obsidian reads the latest `manifest.json` on GitHub, then downloads `main.js` + `manifest.json` + `styles.css` from the GitHub **release** whose tag matches that version.
+### BRAT (recommended until listed in Community plugins)
 
-1. After 1.5.0 is released, use **Settings → Community plugins → Check for updates**.
-2. Manual installs should replace files from the latest GitHub release.
+1. Install [BRAT](https://github.com/TfTHacker/obsidian42-brat).
+2. BRAT → **Add Beta plugin** → `katananananna/obsidian-mathify-notes`.
+3. Enable **Mathify Notes**.
+4. Later: BRAT → **Check for updates** (or enable auto-update).
 
-### Manual / BRAT
+### Manual
 
-1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest GitHub release](https://github.com/katananananna/obsidian-mathify-notes/releases).
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [1.5.0 release](https://github.com/katananananna/obsidian-mathify-notes/releases/tag/1.5.0).
 2. Put them in `.obsidian/plugins/mathify-notes/`.
-3. Enable the plugin.
+3. Reload Obsidian and enable the plugin.
+
+Official Community plugins listing is a separate review by Obsidian. Until then, BRAT or a manual copy is how the vault updates.
 
 ## License
 
