@@ -1,0 +1,21 @@
+name: Attach plugin assets
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  attach:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload main.js, manifest.json, styles.css
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            main.js
+            manifest.json
+            styles.css
