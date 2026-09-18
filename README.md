@@ -1,86 +1,73 @@
-# Mathify Notes 🧪✨
+# Mathify Notes
 
-Automatically converts raw text into LaTeX equations as you type without you ever needing to write LaTeX syntax 
-(e.g., `1/2` ⟶  ½ or `H2O` ⟶ H₂O).
----
+Type common plain-text shortcuts in Obsidian, press **Space** (or run the command), and they become LaTeX math / chemistry.
 
-## 🚀 FULL CONVERTION GUIDE
+Version **1.5.0** focuses on not destroying normal notes: dates, URLs, inline code, fenced code, frontmatter, and everyday English stay untouched.
 
-### 🧪 Chemistry & Reactions
-The smart chemistry engine automatically detects elements, brackets, subscripts, states of matter, and ionic charges.
+## What you type
 
-| What you type | What it transforms into | Description |
-| :--- | :--- | :--- |
-| `H2O` | **H₂O** | Subscripts |
-| `Ca(OH)2` | **Ca(OH)₂** | Polyatomic compounds |
-| `SO42-` | **SO₄²⁻** | Ionic charges & polyatomic ions |
-| `CuSO4*5H2O` | **CuSO₄ · 5H₂O** | Hydration state |
-| `H2O(l)` | **H₂O(l)** | States of matter |
-| `H2 + O2 --> H2O` | **H₂ + O₂ ⟶ H₂O** | Whole reactions with arrows |
+### Chemistry
 
----
+| Type | Result |
+| :--- | :--- |
+| `H2O` | H₂O |
+| `Ca(OH)2` | Ca(OH)₂ |
+| `SO4^2-` or `SO42-` | SO₄²⁻ |
+| `NO3-` | NO₃⁻ |
+| `Cu2+` | Cu²⁺ |
+| `CuSO4*5H2O` | CuSO₄ · 5H₂O |
+| `H2O(l)` | H₂O(l) |
+| `H2 + O2 --> H2O` | H₂ + O₂ ⟶ H₂O |
 
-### 📐 General Math & Fractions
+Bare words that look like elements (`He`, `As`, `US`, `CO`) are left alone. Use a subscript, charge, or state if you mean chemistry (`CO2`, `He2`, `CO(g)`).
 
-| What you type | What it transforms into | Description |
-| :--- | :--- | :--- |
-| `1/2` | **½** | Fractions |
-| `1/2/3` | **¹/₂ / 3** | Nested fractions |
-| `dy/dx` | **dy/dx** | Calculus derivatives |
-| `x^y` | **xʸ** | Superscripts / Powers |
-| `x_i` | **xᵢ** | Subscripts |
-| `sqrt(x)` | **√x** | Square roots |
-| `root(3, x)` | **³√x** | N-th roots |
+### Math
 
----
+| Type | Result |
+| :--- | :--- |
+| `1/2` | ½ |
+| `1/2/3` | nested fraction (only short numbers, so dates like `12/03/2026` stay dates) |
+| `dy/dx` | dy/dx |
+| `x^y` | xʸ |
+| `x_i` | xᵢ |
+| `sqrt(x)` | √x |
+| `root(3, x)` | ³√x |
+| `!=` `<=` `>=` `~~` `+-` | ≠ ≤ ≥ ≈ ± |
+| `pi` `theta` `inf` `deg` `ohm` | π θ ∞ ° Ω |
+| `log(x)` `sin(` | log / sin functions (`log` as a normal word is not converted) |
+| `therefore` `subset` `member` `notin` | ∴ ⊂ ∈ ∉ |
 
-### 🔮 Operators, Symbols & Logic
+`because`, `union`, `intersect`, `cap`, and `beta` are **off** unless you enable **English logic words** in settings.
 
-| What you type | What it transforms into | Description |
-| :--- | :--- | :--- |
-| `!=` | **≠** | Not equal to |
-| `<=` / `=<` | **≤** | Less than or equal to |
-| `>=` | **≥** | Greater than or equal to |
-| `approx` / `~~` | **≈** | Approximately |
-| `+-` / `-+` | **±** / **∓** | Plus-Minus / Minus-Plus |
-| `therefore` | **∴** | Logical "therefore" |
-| `because` | **∵** | Logical "because" |
-| `subset` | **⊂** | Subset |
-| `union` / `cup` | **∪** | Set union |
-| `intersect` / `cap` | **∩** | Set intersection |
-| `member` / `notin` | **∈** / **∉** | Set membership |
+### Arrows
 
----
+`->` `-->` `<-` `<--` `<->` `<=>` `=>` `==>`
 
-### 🧬 Greek Letters & Constants
+## Settings
 
-| What you type | What it transforms into | Description |
-| :--- | :--- | :--- |
-| `pi` | **π** | Pi constant |
-| `theta` | **θ** | Angle variables |
-| `ohm` | **Ω** | Ohms (Physics) |
-| `micro` | **μ** | Micro metric prefix |
-| `delta` / `Delta` | **δ** / **Δ** | Lowercase / Uppercase Delta |
-| `sigma` / `Sigma` | **σ** / **Σ** | Lowercase / Uppercase Sigma |
-| `alpha` / `beta` | **α** / **β** | Alpha & Beta |
-| `gamma` / `phi` | **γ** / **φ** | Gamma & Phi |
-| `omega` / `lambda` | **ω** / **λ** | Omega & Lambda |
-| `deg` | **°** | Degrees symbol |
-| `inf` / `infinity` | **∞** | Infinity |
+Open **Settings → Mathify Notes**:
 
----
+- Convert as you type
+- Chemistry formulas
+- English logic words
 
-### 🏹 Shortcuts for Arrows
+Command palette: **Convert math shorthand in current line**.
 
-| What you type | What it transforms into | Description |
-| :--- | :--- | :--- |
-| `->` / `-->` | **→** / **⟶** | Right arrows |
-| `<-` / `<--` | **←** / **⟵** | Left arrows |
-| `<->` / `<—>` | **↔** / **⟷** | Double-sided arrows |
-| `<=>` | **⇌** | Chemical equilibrium arrow |
-| `=>` / `==>` | **⇒** / **⟹** | Logical implication arrows |
+## Install / update
 
----
+### Community plugins (if listed)
 
-## 📜 License
-This project is open-source under the [MIT License](LICENSE).
+Obsidian reads the latest `manifest.json` on GitHub, then downloads `main.js` + `manifest.json` + `styles.css` from the GitHub **release** whose tag matches that version.
+
+1. After 1.5.0 is released, use **Settings → Community plugins → Check for updates**.
+2. Manual installs should replace files from the latest GitHub release.
+
+### Manual / BRAT
+
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest GitHub release](https://github.com/katananananna/obsidian-mathify-notes/releases).
+2. Put them in `.obsidian/plugins/mathify-notes/`.
+3. Enable the plugin.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
