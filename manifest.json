@@ -1,7 +1,7 @@
 {
 	"id": "mathify-notes",
 	"name": "Mathify Notes",
-	"version": "1.6.0",
+	"version": "1.6.1",
 	"minAppVersion": "0.15.0",
 	"description": "Type plain math and chemistry, press Space, get clean LaTeX. Complex ions, charges, dates, and normal English stay correct.",
 	"author": "katana",
