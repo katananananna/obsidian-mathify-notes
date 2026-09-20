@@ -1,7 +1,7 @@
 {
 	"id": "mathify-notes",
 	"name": "Mathify Notes",
-	"version": "1.5.0",
+	"version": "1.5.1",
 	"minAppVersion": "0.15.0",
 	"description": "Type plain-text math and chemistry shorthand, press Space, and get clean LaTeX — without wrecking normal sentences, dates, code, or URLs.",
 	"author": "katana",
