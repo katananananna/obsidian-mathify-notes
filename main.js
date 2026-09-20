@@ -1,12 +1,20 @@
-const { Plugin, PluginSettingTab, Setting } = require('obsidian');
+const { Plugin, PluginSettingTab, Setting, Notice } = require('obsidian');
 
-const DEFAULT_SETTINGS = { autoConvert: true, convertChemistry: true, convertEnglishLogicWords: false };
+const DEFAULT_SETTINGS = {
+	autoConvert: true,
+	convertChemistry: true,
+	convertEnglishLogicWords: false
+};
 
-const ELEMENTS = new Set('H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn Fr Ra Ac Th Pa U Np Pu Am Cm Bk Cf Es Fm'.split(' '));
+const ELEMENTS = new Set('H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn Fr Ra Ac Th Pa U Np Pu Am Cm Bk Cf Es Fm Md No Lr Rf Db Sg Bh Hs Mt Ds Rg Cn Nh Fl Mc Lv Ts Og'.split(' '));
 const AMBIGUOUS_TWO_ELEMENT = new Set('NO CO US SO SI NI OS AS IN HE BE NE AL CA SC TI PO AT PA'.split(' '));
 
+const DATE_RE = /\b(?:\d{4}[.\/-]\d{1,2}[.\/-]\d{1,2}|\d{1,2}[.\/-]\d{1,2}[.\/-]\d{2,4})\b/g;
+
+const UNPROTECTED = /(\$\$[\s\S]*?\$\$|\$[^$]*\$|`[^`]*`|https?:\/\/[^\s)]+|\[\[[^\]]*\]\]|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|<!--[\s\S]*?-->)/g;
+
 function mapUnprotected(text, fn) {
-	const parts = text.split(/(\$\$[\s\S]*?\$\$|\$[^$]*\$|`[^`]*`|https?:\/\/[^\s)]+|\[\[[^\]]*\]\])/g);
+	const parts = text.split(UNPROTECTED);
 	let changed = false;
 	const out = parts.map((part, i) => {
 		if (i % 2 === 1) return part;
@@ -15,6 +23,19 @@ function mapUnprotected(text, fn) {
 		return next;
 	});
 	return { text: out.join(''), changed };
+}
+
+function maskDates(text) {
+	const saved = [];
+	const masked = text.replace(DATE_RE, (m) => {
+		saved.push(m);
+		return `\u0000D${saved.length - 1}\u0000`;
+	});
+	return { masked, saved };
+}
+
+function unmaskDates(text, saved) {
+	return text.replace(/\u0000D(\d+)\u0000/g, (_, i) => saved[Number(i)] ?? '');
 }
 
 function parseCharge(word) {
@@ -81,6 +102,7 @@ function isChemFormula(word) {
 	const s = scanChem(body);
 	if (!s.valid) return false;
 	if (s.elementCount === 1 && !s.hasNumber && !parsed.charge && !stripped.state) return false;
+	if (!s.hasNumber && !parsed.charge && !stripped.state && !/[()\[\]]/.test(body) && !/[A-Z][a-z]/.test(body)) return false;
 	return s.hasElement;
 }
 
@@ -120,134 +142,3 @@ function formatChemFormula(word) {
 	}
 	return `$${formatCoreChem(parsed.core)}${charge}${stateOfMatter}$`;
 }
-
-function buildRules(settings) {
-	const rules = [
-		{ regex: /\b(\d{1,2})\s*\/\s*(\d{1,2})\s*\/\s*(\d{1,2})\b/g, replacer: (m, a, b, c) => `$\\frac{\\frac{${a}}{${b}}}{${c}}$` },
-		{ regex: /\b(\d+)\s*\/\s*(\d+)\b(?!\s*\/)/g, replacer: (m, a, b) => (a.length === 4 || b.length === 4 ? m : `$\\frac{${a}}{${b}}$`) },
-		{ regex: /\bdy\s*\/\s*dx\b/g, replacer: '$\\frac{dy}{dx}$' },
-		{ regex: /\b([a-zA-Z])\s*\/\s*([a-zA-Z])\b/g, replacer: (m, a, b) => `$\\frac{${a}}{${b}}$` },
-		{ regex: /\broot\(([^,]+)\s*,\s*([^)]+)\)/g, replacer: (m, i, r) => `$\\sqrt[${i}]{${r}}$` },
-		{ regex: /\bsqrt\(([^)]+)\)/g, replacer: (m, c) => `$\\sqrt{${c}}$` },
-		{ regex: /<=>/g, replacer: '$\\rightleftharpoons$' },
-		{ regex: /<->/g, replacer: '$\\leftrightarrow$' },
-		{ regex: /-->/g, replacer: '$\\longrightarrow$' },
-		{ regex: /(?<![\-\w])-?->/g, replacer: '$\\rightarrow$' },
-		{ regex: /<--/g, replacer: '$\\longleftarrow$' },
-		{ regex: /(?<![<\w])<-(?!-)/g, replacer: '$\\leftarrow$' },
-		{ regex: /==>/g, replacer: '$\\Longrightarrow$' },
-		{ regex: /(?<!=)=>/g, replacer: '$\\Rightarrow$' },
-		{ regex: /\bpropto\b/g, replacer: '$\\propto$' },
-		{ regex: /(\b\d+)\s+[xX]\s+(\d+\b)/g, replacer: (m, a, b) => `${a} $\\times$ ${b}` },
-		{ regex: /(?<=\d)\s+\*\s+(?=\d)/g, replacer: ' $\\times$ ' },
-		{ regex: /\s+div\s+/g, replacer: ' $\\div$ ' },
-		{ regex: /~~|\bapprox\b/g, replacer: '$\\approx$' },
-		{ regex: /!=/g, replacer: '$\\neq$' },
-		{ regex: /<=|=</g, replacer: '$\\leq$' },
-		{ regex: />=/g, replacer: '$\\geq$' },
-		{ regex: /\+-/g, replacer: '$\\pm$' },
-		{ regex: /-\+/g, replacer: '$\\mp$' }
-	];
-	if (settings.convertChemistry) {
-		rules.push({ regex: /(?<![A-Za-z])([A-Z0-9][A-Za-z0-9()\[\]*·•.^+-]*)(?![A-Za-z0-9])/g, replacer: (match) => isChemFormula(match) ? formatChemFormula(match) : match });
-	}
-	rules.push(
-		{ regex: /\b([a-zA-Z0-9]+)\^([a-zA-Z0-9-]+)\b/g, replacer: (m, b, e) => `$${b}^{${e}}$` },
-		{ regex: /\b([a-zA-Z])_([a-zA-Z0-9]+)\b/g, replacer: (m, b, s) => `$${b}_{${s}}$` },
-		{ regex: /\b(sin|cos|tan|log|ln|lim)\b(?=\(|_|\^)/g, replacer: (m, f) => `$\\${f}$` },
-		{ regex: /\b(pi|theta|lambda|alpha|gamma|sigma|Sigma|phi|omega|delta|Delta)\b/g, replacer: (m, l) => `$\\${l}$` },
-		{ regex: /\bohm\b|\bOhm\b/g, replacer: '$\\Omega$' },
-		{ regex: /\bmicro\b/g, replacer: '$\\mu$' },
-		{ regex: /\bdeg\b/g, replacer: '$^\\circ$' },
-		{ regex: /\binfinity\b|\binf\b/g, replacer: '$\\infty$' },
-		{ regex: /\btherefore\b/g, replacer: '$\\therefore$' },
-		{ regex: /\bsubset\b/g, replacer: '$\\subset$' },
-		{ regex: /\bcup\b/g, replacer: '$\\cup$' },
-		{ regex: /\bnotin\b/g, replacer: '$\\notin$' },
-		{ regex: /\bmember\b/g, replacer: '$\\in$' }
-	);
-	if (settings.convertEnglishLogicWords) {
-		rules.push({ regex: /\bbecause\b/g, replacer: '$\\because$' }, { regex: /\bunion\b/g, replacer: '$\\cup$' }, { regex: /\bintersect\b/g, replacer: '$\\cap$' }, { regex: /\bcap\b/g, replacer: '$\\cap$' }, { regex: /\bbeta\b/g, replacer: '$\\beta$' });
-	}
-	return rules;
-}
-
-function convertLine(lineText, settings) {
-	const opts = Object.assign({}, DEFAULT_SETTINGS, settings);
-	const rules = buildRules(opts);
-	let currentText = lineText, lineChanged = false;
-	for (const rule of rules) {
-		const result = mapUnprotected(currentText, (plain) => plain.replace(rule.regex, rule.replacer));
-		if (result.changed) { currentText = result.text; lineChanged = true; }
-	}
-	return { text: currentText, changed: lineChanged };
-}
-
-function convertPrefix(lineText, cursorCh, settings) {
-	return convertLine(lineText.slice(0, cursorCh), settings).text;
-}
-
-function lineIsInsideFencedCode(editor, lineNo) {
-	let fences = 0;
-	for (let i = 0; i <= lineNo; i++) {
-		if (/^\s*```/.test(editor.getLine(i))) {
-			if (i === lineNo) return true;
-			fences++;
-		}
-	}
-	return fences % 2 === 1;
-}
-
-function lineIsFrontmatter(editor, lineNo) {
-	if (editor.getLine(0).trim() !== '---') return false;
-	for (let i = 1; i < lineNo; i++) {
-		if (editor.getLine(i).trim() === '---') return false;
-	}
-	return true;
-}
-
-class MathifySettingTab extends PluginSettingTab {
-	constructor(app, plugin) { super(app, plugin); this.plugin = plugin; }
-	display() {
-		const { containerEl } = this;
-		containerEl.empty();
-		containerEl.createEl('h2', { text: 'Mathify Notes' });
-		new Setting(containerEl).setName('Convert as you type').setDesc('Press Space to convert the current line.')
-			.addToggle((t) => t.setValue(this.plugin.settings.autoConvert).onChange(async (v) => { this.plugin.settings.autoConvert = v; await this.plugin.saveSettings(); }));
-		new Setting(containerEl).setName('Chemistry formulas').setDesc('Detect H2O, Ca(OH)2, SO4^2-, hydrates.')
-			.addToggle((t) => t.setValue(this.plugin.settings.convertChemistry).onChange(async (v) => { this.plugin.settings.convertChemistry = v; await this.plugin.saveSettings(); }));
-		new Setting(containerEl).setName('English logic words').setDesc('Also convert because / union / intersect / cap / beta. Off by default.')
-			.addToggle((t) => t.setValue(this.plugin.settings.convertEnglishLogicWords).onChange(async (v) => { this.plugin.settings.convertEnglishLogicWords = v; await this.plugin.saveSettings(); }));
-	}
-}
-
-module.exports = class MathShorthandPlugin extends Plugin {
-	async onload() {
-		await this.loadSettings();
-		this.isConverting = false;
-		this.addCommand({ id: 'convert-shorthand-math', name: 'Convert math shorthand in current line', editorCallback: (editor) => this.runConvert(editor) });
-		this.addSettingTab(new MathifySettingTab(this.app, this));
-		this.registerEvent(this.app.workspace.on('editor-change', (editor) => {
-			if (!this.settings.autoConvert || this.isConverting) return;
-			const cursor = editor.getCursor();
-			const lineText = editor.getLine(cursor.line);
-			if (cursor.ch > 0 && lineText[cursor.ch - 1] === ' ') this.runConvert(editor);
-		}));
-	}
-	runConvert(editor) {
-		this.isConverting = true;
-		try { this.convertMathInCurrentLine(editor); } finally { this.isConverting = false; }
-	}
-	convertMathInCurrentLine(editor) {
-		const cursor = editor.getCursor();
-		if (lineIsInsideFencedCode(editor, cursor.line) || lineIsFrontmatter(editor, cursor.line)) return;
-		const lineText = editor.getLine(cursor.line);
-		const result = convertLine(lineText, this.settings);
-		if (!result.changed) return;
-		editor.replaceRange(result.text, { line: cursor.line, ch: 0 }, { line: cursor.line, ch: lineText.length });
-		editor.setCursor({ line: cursor.line, ch: convertPrefix(lineText, cursor.ch, this.settings).length });
-	}
-	async loadSettings() { this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData()); }
-	async saveSettings() { await this.saveData(this.settings); }
-	onunload() {}
-};
