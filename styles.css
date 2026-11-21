@@ -1,1 +1,12 @@
 /* Mathify Notes — no extra styles required. */
+
+/* Shortcut guide (settings + pop-up) */
+.mathify-guide-group { margin: 1.2em 0 0.4em; }
+.mathify-guide-table { width: 100%; border-collapse: collapse; font-size: var(--font-ui-small); }
+.mathify-guide-table th { text-align: left; color: var(--text-muted); font-weight: 600; padding: 4px 8px; border-bottom: 1px solid var(--background-modifier-border); }
+.mathify-guide-table td { padding: 5px 8px; border-bottom: 1px solid var(--background-modifier-border); vertical-align: top; }
+.mathify-guide-in { font-family: var(--font-monospace); white-space: nowrap; }
+.mathify-guide-out { font-size: 1.15em; }
+.mathify-guide-note { color: var(--text-muted); }
+.mathify-guide-intro { color: var(--text-muted); }
+.mathify-guide-modal .modal-content { max-height: 75vh; overflow: auto; }

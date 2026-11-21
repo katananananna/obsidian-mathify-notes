@@ -1,4 +1,4 @@
-# Mathify Notes — User guide (v1.6.3)
+# Mathify Notes — User guide (v1.8.0)
 
 This is the full instruction book for the plugin. Use it to install, teach someone else, or decide if a conversion is a bug.
 
@@ -20,7 +20,7 @@ If something converted that should not have, wrap it in backticks or turn the ma
 
 ## 2. Install
 
-Requirements: Obsidian 0.15.0+. Release **1.6.3** assets: `main.js`, `manifest.json`, `styles.css`.
+Requirements: Obsidian 0.15.0+. Release **1.8.0** assets: `main.js`, `manifest.json`, `styles.css`.
 
 ### BRAT (recommended)
 
@@ -126,10 +126,10 @@ Fenced code and YAML frontmatter also stay plain.
 | Nothing converts | Enabled? Live convert on? Not in a code block? |
 | Chemistry skipped | Chemistry on? Need a digit/charge/state |
 | `because` became a symbol | Turn English logic words off |
-| Date became a fraction | Confirm 1.6.3; report the string |
+| Date became a fraction | Confirm 1.8.0; report the string |
 | Double `$$` | Undo |
 | BRAT old | Check the latest release has the three assets |
-| Store not on 1.6.3 | Wait for Completed on the dashboard |
+| Store not on 1.8.0 | Wait for Completed on the dashboard |
 
 ## 10. Release assets
 
@@ -142,3 +142,19 @@ Copy [docs/TEST.md](docs/TEST.md) into a new vault note and run it.
 ## 12. License
 
 MIT. Katana — https://github.com/katananananna · https://x.com/InKatanaWeSlash
+
+## New in 1.8.0
+
+Chemistry is written with `\ce{}` (mhchem, built into Obsidian), and whole equations become one block:
+
+| Type | Result |
+|---|---|
+| `H2 + O2 -> H2O` | `$\ce{H2 + O2 -> H2O}$` |
+| `N2 + 3H2 <=> 2NH3` | `$\ce{N2 + 3H2 <=> 2NH3}$` |
+| `Cu2+ + 2e- -> Cu` | `$\ce{Cu^{2+} + 2e- -> Cu}$` |
+| `int(0,1)`, `sum(i=1,n)` | `$\int_{0}^{1}$`, `$\sum_{i=1}^{n}$` |
+| `vec(F)`, `hat(i)`, `bar(x)`, `dot(x)` | vectors, unit vectors, mean, time derivative |
+| `nCr(5,2)`, `nPr(5,2)` | combinations, permutations |
+| `degC`, `dH`, `mol/dm3`, `m/s2` | °C, ΔH, mol dm⁻³, m s⁻² |
+
+Structure diagrams (rings, skeletal formulas) can't be drawn by Obsidian's maths renderer. Use a SMILES plugin for those.

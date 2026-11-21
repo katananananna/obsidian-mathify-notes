@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.8.0
+
+- Chemistry now uses `\ce{}` (mhchem, built into Obsidian): upright formulas, proper charges and states
+- Whole equations become one block: `N2 + 3H2 <=> 2NH3`, `Cu2+ + 2e- -> Cu`, `CaCO3(s) -> CaO(s) + CO2(g)`, also when typed word by word
+- New: `int(a,b)`, `sum(i=1,n)`, `vec()`, `hat()`, `bar()`, `dot()`, `nCr(n,r)`, `nPr(n,r)`, `forall`, `degC`/`degF`, `dH`/`dS`/`dG`, `mol/dm3`, `g/cm3`, `kg/m3`, `m/s2`
+- `exists` → ∃ with English logic words on
+- Tests updated; arrows and logic words were being checked wrongly
+
+## 1.7.0
+
+- Shortcut guide in settings and as a pop-up (Show shortcut guide command)
+
 ## 1.6.3
 
 Fixes broken releases 1.6.0 to 1.6.2: their main.js was incomplete, so the plugin did not load. Rebuilt from the last working converter (1.5.0) with these fixes:
