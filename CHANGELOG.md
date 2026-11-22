@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.9.0
+
+- Fixes a clash with the Pinyin Companion plugin: `pi`, `xi`, `mu`, `nu` and `chi` are also pinyin syllables (批 pi, 學習 xi, 木 mu), and were turning into π, ξ, μ, ν and χ while you typed pinyin. They are now left alone when they come straight after Chinese text, or after other Latin words that follow Chinese. Type `\pi` (or `\xi`, `\mu`, `\nu`, `\chi`) to force the symbol there. Away from Chinese text nothing changes.
+- New up and down arrows: `|^` gives ↑ and `|v` gives ↓. They only convert on their own between spaces, so `|x|^2`, `|v|` and table rows are untouched. Handy for gas given off ↑ and precipitate ↓.
+
 ## 1.8.0
 
 - Chemistry now uses `\ce{}` (mhchem, built into Obsidian): upright formulas, proper charges and states

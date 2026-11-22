@@ -7,6 +7,9 @@ const ELEMENTS = new Set('H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc 
 // Text that must never be touched: math, inline code, URLs, wiki links, LaTeX delimiters, HTML comments, calendar dates.
 const PROTECTED = /(\$\$[\s\S]*?\$\$|\$[^$]*\$|`[^`]*`|https?:\/\/[^\s)]+|\[\[[^\]]*\]\]|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|<!--[\s\S]*?(?:-->|$)|\b\d{4}[.\/-]\d{1,2}[.\/-]\d{1,2}\b|\b\d{1,2}[.\/-]\d{1,2}[.\/-]\d{2,4}\b)/g;
 
+// Chinese character (plus any punctuation/spaces) followed only by Latin words, up to the end of the text.
+const PINYIN_ZONE = /[\u3400-\u9FFF\uF900-\uFAFF][\u3000-\u303F\uFF00-\uFFEF\s]*(?:[A-Za-z\u00C0-\u024F\u1E00-\u1EFF][A-Za-z\u00C0-\u024F\u1E00-\u1EFF0-9']*\s+)*$/;
+
 function mapUnprotected(text, fn) {
 	const parts = text.split(PROTECTED);
 	let changed = false;
@@ -192,6 +195,9 @@ function buildRules(settings) {
 		{ regex: /(?<!-)->/g, replacer: '→' },
 		{ regex: /<--/g, replacer: '⟵' },
 		{ regex: /(?<!<)<-(?!-)/g, replacer: '←' },
+		// Up/down arrows: a lone |^ or |v between spaces (so |x|^2, |v| and table rows are untouched).
+		{ regex: /(?<![^\s])\|\^(?![^\s])/g, replacer: (m, offset, whole) => (whole.split('|').length === 2 ? '↑' : m) },
+		{ regex: /(?<![^\s])\|v(?![^\s])/g, replacer: (m, offset, whole) => (whole.split('|').length === 2 ? '↓' : m) },
 		{ regex: /==>/g, replacer: '⟹' },
 		{ regex: /(?<!=)=>/g, replacer: '⇒' },
 		{ regex: /\bpropto\b/g, replacer: '$\\propto$' },
@@ -217,7 +223,12 @@ function buildRules(settings) {
 		{ regex: /\b([a-zA-Z])_([a-zA-Z0-9]+)\b/g, replacer: (m, b, s) => `$${b}_{${s}}$` },
 		{ regex: /\b(sin|cos|tan|log|ln|lim)\(([^()]*)\)/g, replacer: (m, f, a) => `$\\${f}(${a})$` },
 		{ regex: /\b(sin|cos|tan|log|ln|lim)\b(?=\(|_|\^)/g, replacer: (m, f) => `$\\${f}$` },
-		{ regex: /\b(pi|theta|lambda|alpha|gamma|sigma|Sigma|phi|omega|delta|Delta|epsilon|zeta|eta|kappa|mu|nu|xi|rho|tau|chi|psi)\b/g, replacer: (m, l) => `$\\${l}$` },
+		// Backslash escape: \pi always gives π, even straight after Chinese text.
+		{ regex: /\\(pi|xi|mu|nu|chi)\b/g, replacer: (m, l) => `$\\${l}$` },
+		// These five Greek names are also pinyin syllables (批 pi, 學習 xi, 木 mu, 女 nu, 吃 chi), so they are
+		// left alone when they follow Chinese text, directly or after other pinyin words: 批評 pi ping.
+		{ regex: /(?<!\\)\b(pi|xi|mu|nu|chi)\b/g, replacer: (m, l, offset, whole) => (PINYIN_ZONE.test(whole.slice(0, offset)) ? m : `$\\${l}$`) },
+		{ regex: /(?<!\\)\b(theta|lambda|alpha|gamma|sigma|Sigma|phi|omega|delta|Delta|epsilon|zeta|eta|kappa|rho|tau|psi)\b/g, replacer: (m, l) => `$\\${l}$` },
 		{ regex: /\b[oO]hm\b/g, replacer: '$\\Omega$' },
 		{ regex: /\bmicro\b/g, replacer: '$\\mu$' },
 		{ regex: /\bdeg\b/g, replacer: '$^\\circ$' },
@@ -295,6 +306,8 @@ const SHORTCUTS = [
 		['=>', '⇒', 'implies'],
 		['==>', '⟹', 'long implies'],
 		['<=>', '⇌', 'equilibrium'],
+		['|^', '↑', 'up arrow (gas given off); on its own between spaces'],
+		['|v', '↓', 'down arrow (precipitate); on its own between spaces'],
 	] },
 	{ group: 'Chemistry', rows: [
 		['H2O, CO2, Ca(OH)2', 'H₂O, CO₂, Ca(OH)₂', 'formulas (need a digit, charge, bracket or state)'],
@@ -350,7 +363,7 @@ const SHORTCUTS = [
 		['subset', '⊂', 'always on'],
 	] },
 	{ group: 'Greek', rows: [
-		['pi, theta, lambda, alpha, gamma', 'π θ λ α γ', ''],
+		['pi, theta, lambda, alpha, gamma', 'π θ λ α γ', 'pi, xi, mu, nu, chi are skipped straight after Chinese (they are pinyin); type \\pi to force π'],
 		['sigma, Sigma, phi, omega', 'σ Σ φ ω', ''],
 		['delta, Delta, epsilon, zeta, eta', 'δ Δ ε ζ η', ''],
 		['kappa, mu, nu, xi, rho, tau, chi, psi', 'κ μ ν ξ ρ τ χ ψ', ''],

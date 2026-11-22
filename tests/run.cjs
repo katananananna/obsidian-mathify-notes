@@ -68,6 +68,27 @@ const exact = [
   ['2 mol/dm3', '2 mol dm$^{-3}$'],
   ['9.8 m/s2', '9.8 m s$^{-2}$'],
   ['the answer exists', 'the answer exists'],
+  // 1.9.0: pinyin syllables that are also Greek names stay as typed after Chinese
+  ['批評 pi ', '批評 pi '],
+  ['批評 pi ping', '批評 pi ping'],
+  ['學習 xue xi ', '學習 xue xi '],
+  ['木 mu ', '木 mu '],
+  ['女 nu ', '女 nu '],
+  ['吃 chi ', '吃 chi '],
+  ['偏遠 pian yuan ', '偏遠 pian yuan '],
+  ['2 pi r ', '2 $\\pi$ r '],
+  ['x = theta ', 'x = $\\theta$ '],
+  ['圓周率 \\pi ', '圓周率 $\\pi$ '],
+  ['學習 and pi ', '學習 and pi '],
+  ['學習 and \\pi ', '學習 and $\\pi$ '],
+  ['學習：2 pi r ', '學習：2 $\\pi$ r '],
+  // up/down arrows
+  ['|^ ', '↑ '],
+  ['x |v ', 'x ↓ '],
+  ['CO2 |^ ', '$\\ce{CO2}$ ↑ '],
+  ['|x|^2 ', '|x|^2 '],
+  ['|v| = 3 ', '|v| = 3 '],
+  ['| a |v | b |', '| a |v | b |'],
 ];
 for (const [input, expected] of exact) {
   const got = convert(input, S).text;
