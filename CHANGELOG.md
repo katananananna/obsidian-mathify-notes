@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.10.0
+
+- `/pi` and `\pi` now both give π with the slash removed, and this works for every Greek name (`/theta`, `\alpha`, `/xi` ...). Before, `\theta` kept its backslash and `/pi` left a slash behind.
+- `n/a`, `w/o`, `b/c`, `i/o`, `w/e`, `c/o`, `s/o`, `a/c`, `h/w`, `r/w`, `y/n`, `m/f`, `t/f`, `d/c`, `p/m` and `a/m` are no longer turned into fractions.
+- `micro` only becomes μ before a unit (`5 micro m`), so "micro services" stays as written.
+
 ## 1.9.0
 
 - Fixes a clash with the Pinyin Companion plugin: `pi`, `xi`, `mu`, `nu` and `chi` are also pinyin syllables (批 pi, 學習 xi, 木 mu), and were turning into π, ξ, μ, ν and χ while you typed pinyin. They are now left alone when they come straight after Chinese text, or after other Latin words that follow Chinese. Type `\pi` (or `\xi`, `\mu`, `\nu`, `\chi`) to force the symbol there. Away from Chinese text nothing changes.

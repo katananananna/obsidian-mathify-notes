@@ -7,6 +7,9 @@ const ELEMENTS = new Set('H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc 
 // Text that must never be touched: math, inline code, URLs, wiki links, LaTeX delimiters, HTML comments, calendar dates.
 const PROTECTED = /(\$\$[\s\S]*?\$\$|\$[^$]*\$|`[^`]*`|https?:\/\/[^\s)]+|\[\[[^\]]*\]\]|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|<!--[\s\S]*?(?:-->|$)|\b\d{4}[.\/-]\d{1,2}[.\/-]\d{1,2}\b|\b\d{1,2}[.\/-]\d{1,2}[.\/-]\d{2,4}\b)/g;
 
+// Letter pairs that are abbreviations, not fractions: n/a, w/o, b/c, i/o ...
+const NOT_FRACTIONS = new Set(['na', 'wo', 'bc', 'io', 'we', 'co', 'so', 'ac', 'hw', 'rw', 'yn', 'mf', 'tf', 'dc', 'pm', 'am']);
+
 // Chinese character (plus any punctuation/spaces) followed only by Latin words, up to the end of the text.
 const PINYIN_ZONE = /[\u3400-\u9FFF\uF900-\uFAFF][\u3000-\u303F\uFF00-\uFFEF\s]*(?:[A-Za-z\u00C0-\u024F\u1E00-\u1EFF][A-Za-z\u00C0-\u024F\u1E00-\u1EFF0-9']*\s+)*$/;
 
@@ -186,7 +189,7 @@ function buildRules(settings) {
 		{ regex: /(?<![\d.\/])(\d{1,2})\s*\/\s*(\d{1,2})\s*\/\s*(\d{1,2})(?![\d.\/])/g, replacer: (m, a, b, c) => `$\\frac{\\frac{${a}}{${b}}}{${c}}$` },
 		{ regex: /(?<![\d.\/])(\d{1,3})\s*\/\s*(\d{1,3})(?![\d.\/])/g, replacer: (m, a, b) => `$\\frac{${a}}{${b}}$` },
 		{ regex: /\bd([A-Za-z])\s*\/\s*d([A-Za-z])\b/g, replacer: (m, a, b) => `$\\frac{d${a}}{d${b}}$` },
-		{ regex: /(?<![\w\/])([a-z])\s*\/\s*([a-z])(?![\w\/])/g, replacer: (m, a, b) => `$\\frac{${a}}{${b}}$` },
+		{ regex: /(?<![\w\/])([a-z])\s*\/\s*([a-z])(?![\w\/])/g, replacer: (m, a, b) => (NOT_FRACTIONS.has(a + b) ? m : `$\\frac{${a}}{${b}}$`) },
 		{ regex: /\broot\(([^,()]+)\s*,\s*([^()]+)\)/g, replacer: (m, i, r) => `$\\sqrt[${i.trim()}]{${r.trim()}}$` },
 		{ regex: /\bsqrt\(([^()]+)\)/g, replacer: (m, c) => `$\\sqrt{${c}}$` },
 		{ regex: /<=>/g, replacer: '⇌' },
@@ -223,14 +226,14 @@ function buildRules(settings) {
 		{ regex: /\b([a-zA-Z])_([a-zA-Z0-9]+)\b/g, replacer: (m, b, s) => `$${b}_{${s}}$` },
 		{ regex: /\b(sin|cos|tan|log|ln|lim)\(([^()]*)\)/g, replacer: (m, f, a) => `$\\${f}(${a})$` },
 		{ regex: /\b(sin|cos|tan|log|ln|lim)\b(?=\(|_|\^)/g, replacer: (m, f) => `$\\${f}$` },
-		// Backslash escape: \pi always gives π, even straight after Chinese text.
-		{ regex: /\\(pi|xi|mu|nu|chi)\b/g, replacer: (m, l) => `$\\${l}$` },
+		// Escape: \pi or /pi always gives π (the slash is removed), even straight after Chinese text.
+		{ regex: /(?<![\w\/\\])[\/\\](pi|theta|lambda|alpha|gamma|sigma|Sigma|phi|omega|delta|Delta|epsilon|zeta|eta|kappa|mu|nu|xi|rho|tau|chi|psi|beta)\b(?!\/)/g, replacer: (m, l) => `$\\${l}$` },
 		// These five Greek names are also pinyin syllables (批 pi, 學習 xi, 木 mu, 女 nu, 吃 chi), so they are
 		// left alone when they follow Chinese text, directly or after other pinyin words: 批評 pi ping.
 		{ regex: /(?<!\\)\b(pi|xi|mu|nu|chi)\b/g, replacer: (m, l, offset, whole) => (PINYIN_ZONE.test(whole.slice(0, offset)) ? m : `$\\${l}$`) },
 		{ regex: /(?<!\\)\b(theta|lambda|alpha|gamma|sigma|Sigma|phi|omega|delta|Delta|epsilon|zeta|eta|kappa|rho|tau|psi)\b/g, replacer: (m, l) => `$\\${l}$` },
 		{ regex: /\b[oO]hm\b/g, replacer: '$\\Omega$' },
-		{ regex: /\bmicro\b/g, replacer: '$\\mu$' },
+		{ regex: /\bmicro(?=\s*(?:m|g|l|s|mol|A|F|V|W|Pa|N|J|C)\b)/g, replacer: '$\\mu$' },
 		{ regex: /\bdeg\b/g, replacer: '$^\\circ$' },
 		{ regex: /\binfinity\b|\binf\b/g, replacer: '$\\infty$' },
 		{ regex: /\bnotin\b/g, replacer: '$\\notin$' },
@@ -363,7 +366,8 @@ const SHORTCUTS = [
 		['subset', '⊂', 'always on'],
 	] },
 	{ group: 'Greek', rows: [
-		['pi, theta, lambda, alpha, gamma', 'π θ λ α γ', 'pi, xi, mu, nu, chi are skipped straight after Chinese (they are pinyin); type \\pi to force π'],
+		['pi, theta, lambda, alpha, gamma', 'π θ λ α γ', 'pi, xi, mu, nu, chi are skipped straight after Chinese (they are pinyin); type \\pi or /pi to force π'],
+		['\\pi  /theta  \\alpha', 'π  θ  α', 'a slash or backslash first always converts, and the slash is removed'],
 		['sigma, Sigma, phi, omega', 'σ Σ φ ω', ''],
 		['delta, Delta, epsilon, zeta, eta', 'δ Δ ε ζ η', ''],
 		['kappa, mu, nu, xi, rho, tau, chi, psi', 'κ μ ν ξ ρ τ χ ψ', ''],

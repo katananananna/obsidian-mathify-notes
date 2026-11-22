@@ -1,4 +1,4 @@
-# Mathify Notes — User guide (v1.9.0)
+# Mathify Notes — User guide (v1.10.0)
 
 This is the full instruction book for the plugin. Use it to install, teach someone else, or decide if a conversion is a bug.
 
@@ -20,7 +20,7 @@ If something converted that should not have, wrap it in backticks or turn the ma
 
 ## 2. Install
 
-Requirements: Obsidian 0.15.0+. Release **1.9.0** assets: `main.js`, `manifest.json`, `styles.css`.
+Requirements: Obsidian 0.15.0+. Release **1.10.0** assets: `main.js`, `manifest.json`, `styles.css`.
 
 ### BRAT (recommended)
 
@@ -126,10 +126,10 @@ Fenced code and YAML frontmatter also stay plain.
 | Nothing converts | Enabled? Live convert on? Not in a code block? |
 | Chemistry skipped | Chemistry on? Need a digit/charge/state |
 | `because` became a symbol | Turn English logic words off |
-| Date became a fraction | Confirm 1.9.0; report the string |
+| Date became a fraction | Confirm 1.10.0; report the string |
 | Double `$$` | Undo |
 | BRAT old | Check the latest release has the three assets |
-| Store not on 1.9.0 | Wait for Completed on the dashboard |
+| Store not on 1.10.0 | Wait for Completed on the dashboard |
 
 ## 10. Release assets
 
@@ -168,3 +168,7 @@ Structure diagrams (rings, skeletal formulas) can't be drawn by Obsidian's maths
 | `\pi`, `\xi`, `\mu`, `\nu`, `\chi` | π ξ μ ν χ | always converts, even straight after Chinese |
 
 With the Pinyin Companion plugin: `pi`, `xi`, `mu`, `nu` and `chi` are pinyin syllables, so after Chinese text they stay as typed. Use the backslash forms when you really want the Greek letter there.
+
+## New in 1.10.0
+
+Type `/pi` or `\pi` (or `/theta`, `\alpha`, any Greek name) and you get the symbol with the slash removed. This always works, even right after Chinese text. `n/a`, `w/o`, `b/c` and similar abbreviations are not turned into fractions, and `micro` only becomes μ before a unit.

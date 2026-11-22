@@ -82,6 +82,16 @@ const exact = [
   ['學習 and pi ', '學習 and pi '],
   ['學習 and \\pi ', '學習 and $\\pi$ '],
   ['學習：2 pi r ', '學習：2 $\\pi$ r '],
+  // 1.10.0: slash escape, abbreviations, micro
+  ['/pi ', '$\\pi$ '],
+  ['學習 /xi ', '學習 $\\xi$ '],
+  ['/theta ', '$\\theta$ '],
+  ['\\alpha ', '$\\alpha$ '],
+  ['n/a ', 'n/a '],
+  ['w/o sugar ', 'w/o sugar '],
+  ['a/b ', '$\\frac{a}{b}$ '],
+  ['micro services ', 'micro services '],
+  ['5 micro m ', '5 $\\mu$ m '],
   // up/down arrows
   ['|^ ', '↑ '],
   ['x |v ', 'x ↓ '],
